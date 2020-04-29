@@ -65,8 +65,7 @@ public class ttt {
 
     public boolean set_uMove(String ter) {
         try {
-            if (this.wMoves[ternary_decimal.get(ter)] ||
-            this.uMoves[ternary_decimal.get(ter)]) {
+            if (this.wMoves[ternary_decimal.get(ter)] || this.uMoves[ternary_decimal.get(ter)]) {
                 return false;
             }
             this.uMoves[ternary_decimal.get(ter)] = true;
@@ -75,9 +74,13 @@ public class ttt {
             return false;
         }
     }
+    
+    public boolean set_wMove() {
+        //TODO: Implement
+        return false;
+    }
 
-    public boolean set_wMove(String ter /*TODO: remove parameter???*/) {
-        // TODO: ACTUAL CPU moving algorithm.
+    public boolean instantiateW_DuplicateCheck(String ter) {
         try {
             if (this.wMoves[ternary_decimal.get(ter)] ||
             this.uMoves[ternary_decimal.get(ter)]) {
@@ -105,7 +108,7 @@ public class ttt {
         }
     }
 
-    public ArrayList<Byte2> checkForDuplicates(){
+    public boolean checkForDuplicates(){
         System.out.println("begDup");
         int numChecks = 0;
         Scanner scChk = new Scanner(this.Scores);
@@ -138,7 +141,7 @@ public class ttt {
                 sbd2 = new StringBuilder(d2.next());
                 for (int l = 0; l < sbd2.length() % 3; l++) {
                     ter2 = sbd2.substring(l * 3, l * 3 + 3);
-                    set_wMove(ter2);
+                    instantiateW_DuplicateCheck(ter2);
                 }
                 System.out.println(++check);
                 if (this.wMoves.equals(this.uMoves)) {
@@ -147,13 +150,12 @@ public class ttt {
             }
         }
         System.out.println("checked "+(int)Math.sqrt(check) + " separate scoring patterns. Overlaps are as follows: ");
-        return retAL;
+        String retString = retAL.toString();
+        System.out.println(retString);
+        return retAL.size() != 0;
     }
 
     public static void main(String[] args) {
-        System.out.println("Starting");
-        ttt test = new ttt();
-        String retString = test.checkForDuplicates().toString();
-        System.out.println(retString);
+        new ttt().checkForDuplicates();
     }
 }
